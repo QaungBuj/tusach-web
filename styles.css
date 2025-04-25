@@ -1,0 +1,166 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("https://image.nhandan.vn/1200x630/Uploaded/2025/yqjwcqjlq/2024_11_06/registration-4-1728498489-1728498489-copy-2208.jpg.webp")
+    no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  color: #333;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form input,
+.form select,
+.form button {
+  margin: 10px;
+  padding: 10px;
+  width: 80%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form button {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+.postcard {
+  margin-top: 30px;
+  margin-left: auto; /* Add this to center horizontally */
+  margin-right: auto; /* Add this to center horizontally */
+  background-image: url("./assets/postcard.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 110px; /*chỉnh kích cỡ khung*/
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: none;
+  color: #222;
+  width: 80%; /* Keep this width */
+  max-width: 100%;
+  overflow: hidden;
+  filter: contrast(105%) brightness(105%) blur(0px);
+}
+
+.postcard h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.postcard-name {
+  display: inline-block;
+  margin-left: -28px;
+  margin-top: 15px;
+  margin-bottom: 21px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #981;
+  font-family: "Lobster", Lobster;
+  position: relative;
+  max-width: 800px;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: right;
+  direction: rtl;
+  overflow-wrap: break-word;
+}
+
+.footer {
+  font-style: italic;
+  margin-top: 20px;
+}
+
+.signature {
+  font-size: 10px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  margin-left: 500px;
+  margin-right: 300px;
+  margin-bottom: 58px;
+  font-family: "Dancing Script", serif;
+  white-space: nowrap;
+}
+
+#download-btn {
+  margin-top: 20px;
+  display: none;
+  padding: 10px 20px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* HIỆU ỨNG IN */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: url("https://i.imgur.com/qtC9QSR.png") no-repeat center center !important;
+    background-size: cover !important;
+  }
+
+  .container {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+  }
+}
+
+/* RESPONSIVE - MOBILE */
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  .form input,
+  .form select,
+  .form button {
+    width: 100%;
+  }
+
+  .postcard {
+    padding: 20px;
+  }
+
+  .postcard-name {
+    margin-left: 40px;
+    margin-right: 50px;
+    font-size: 14px;
+    max-width: 90%;
+  }
+
+  .signature {
+    margin-left: 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .postcard {
+    padding: 30px;
+  }
+}
