@@ -50,7 +50,7 @@ h2 {
 }
 
 .postcard {
-  background-image: url("./assets/postcard.png");
+  background-image: url("./assets/1.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -135,7 +135,6 @@ h2 {
 @media (max-width: 480px) {
   .container {
     width: 100%;
-    padding: 0;
   }
 
   .postcard {
