@@ -1,3 +1,19 @@
+const postcard_backgrounds = [
+  "./assets/1.png",
+  "./assets/2.png",
+  "./assets/3.png",
+  "./assets/4.png",
+  "./assets/5.png",
+  "./assets/6.png",
+  "./assets/7.png",
+  "./assets/8.png",
+  "./assets/9.png",
+  "./assets/10.png",
+  "./assets/11.png",
+  "./assets/12.png",
+  "./assets/13.png",
+];
+
 function generatePostcard() {
   const name = document.getElementById("name").value;
   const gender = document.getElementById("gender").value;
@@ -12,6 +28,12 @@ function generatePostcard() {
     alert("Vui lòng điền đầy đủ thông tin.");
     return;
   }
+
+  const randomIndex = Math.floor(Math.random() * postcard_backgrounds.length);
+  const selectedBackground = postcard_backgrounds[randomIndex];
+
+  const postcardElement = document.getElementById("postcard");
+  postcardElement.style.backgroundImage = `url('${selectedBackground}')`;
 
   let xungHo = "Bạn";
   if (gender === "male") xungHo = "Anh";
