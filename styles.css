@@ -2,8 +2,7 @@ body {
   font-family: "Segoe UI", sans-serif;
   margin: 0;
   padding: 0;
-  background: url("https://image.nhandan.vn/1200x630/Uploaded/2025/yqjwcqjlq/2024_11_06/registration-4-1728498489-1728498489-copy-2208.jpg.webp")
-    no-repeat center center;
+  background: url("./assets/background.png") no-repeat center center;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -11,17 +10,15 @@ body {
   min-height: 100vh;
   text-align: center;
   color: #333;
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
 }
 
 .container {
-  max-width: 600px;
-  margin: auto;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 40px;
+  max-width: 100%;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
@@ -32,12 +29,18 @@ h2 {
 .form input,
 .form select,
 .form button {
-  margin: 10px;
-  padding: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 10px;
   width: 80%;
   font-size: 16px;
-  border: 1px solid #ccc;
+  font-family: "Segoe UI", sans-serif;
+  border: 1px solid #dcdcdc;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  outline: none;
 }
 
 .form button {
@@ -47,40 +50,37 @@ h2 {
 }
 
 .postcard {
-  margin-top: 30px;
-  margin-left: auto; /* Add this to center horizontally */
-  margin-right: auto; /* Add this to center horizontally */
   background-image: url("./assets/postcard.png");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 110px; /*chỉnh kích cỡ khung*/
-  border-radius: 12px;
+
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 7/4;
+  margin: 30px auto;
+
+  border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   display: none;
   color: #222;
-  width: 80%; /* Keep this width */
-  max-width: 100%;
-  overflow: hidden;
+  overflow: visible;
+  box-sizing: border-box;
   filter: contrast(105%) brightness(105%) blur(0px);
-}
-
-.postcard h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
+  position: relative;
 }
 
 .postcard-name {
   display: inline-block;
-  margin-left: -28px;
-  margin-top: 15px;
-  margin-bottom: 21px;
-  font-size: 15px;
+  position: absolute;
+  left: 40%;
+  top: 38%;
+  transform: translate(0, 20%);
+  font-size: calc(0.6vw + 10px);
   font-weight: bold;
   color: #981;
   font-family: "Lobster", Lobster;
-  position: relative;
-  max-width: 800px;
+  max-width: 1000px;
   white-space: normal;
   word-wrap: break-word;
   text-align: right;
@@ -106,7 +106,8 @@ h2 {
 }
 
 #download-btn {
-  margin-top: 20px;
+  /* margin-top: 10px; */
+  margin-bottom: 10px;
   display: none;
   padding: 10px 20px;
   background: #2196f3;
@@ -133,34 +134,32 @@ h2 {
 /* RESPONSIVE - MOBILE */
 @media (max-width: 480px) {
   .container {
-    padding: 10px;
+    width: 100%;
+    padding: 0;
   }
 
-  .form input,
-  .form select,
-  .form button {
+  .postcard {
     width: 100%;
   }
 
-  .postcard {
-    padding: 20px;
-  }
-
-  .postcard-name {
-    margin-left: 40px;
-    margin-right: 50px;
-    font-size: 14px;
-    max-width: 90%;
-  }
-
-  .signature {
-    margin-left: 20px;
-    font-size: 14px;
+  .postcar-name {
+    right: 50%;
+    top: 40%;
+    font-size: px;
+    right: 57%;
+    top: 39%;
+    transform: translate(0, 10%);
+    font-size: calc(0.5vw + 10px);
   }
 }
 
-@media (max-width: 768px) {
+/* RESPONSIVE - TABLET */
+@media (max-width: 860) {
+  .container {
+    width: 90%;
+  }
+
   .postcard {
-    padding: 30px;
+    width: 90%;
   }
 }
