@@ -14,15 +14,13 @@ const postcard_backgrounds = [
   "./assets/13.png",
 ];
 
+// Store the processed image data URL
+let processedImageDataUrl = null;
+
 function generatePostcard() {
   const name = document.getElementById("name").value;
   const gender = document.getElementById("gender").value;
   const dob = document.getElementById("dob").value;
-
-  // if (!name || !gender || !dob) {
-  //   alert("Vui lòng điền đầy đủ thông tin.");
-  //   return;
-  // }
 
   if (!name) {
     alert("Vui lòng điền đầy đủ thông tin.");
@@ -32,54 +30,114 @@ function generatePostcard() {
   const randomIndex = Math.floor(Math.random() * postcard_backgrounds.length);
   const selectedBackground = postcard_backgrounds[randomIndex];
 
-  const postcardElement = document.getElementById("postcard");
-  postcardElement.style.backgroundImage = `url('${selectedBackground}')`;
-
+  // Get xung ho based on gender
   let xungHo = "Bạn";
   if (gender === "male") xungHo = "Anh";
   else if (gender === "female") xungHo = "Chị";
 
-  const message = `<span class="postcard-name">${xungHo} <strong>${name}</strong></span><br>.`;
+  const fullText = `${xungHo} ${name}`;
 
-  document.getElementById("postcard-text").innerHTML = message;
-  document.getElementById("postcard").style.display = "block";
-  document.getElementById("download-btn").style.display = "inline-block";
+  // Create image directly on canvas
+  createImageWithText(selectedBackground, fullText)
+    .then((dataUrl) => {
+      // Save the processed image URL for later download
+      processedImageDataUrl = dataUrl;
+
+      // Display the processed image
+      const postcardElement = document.getElementById("postcard");
+      postcardElement.style.backgroundImage = `url('${dataUrl}')`;
+      postcardElement.style.display = "block";
+
+      // Show download button
+      document.getElementById("download-btn").style.display = "inline-block";
+
+      // Optional: You can still update the text overlay if needed
+      document.getElementById("postcard-text").innerHTML = "";
+    })
+    .catch((error) => {
+      console.error("Error generating postcard:", error);
+      alert("Có lỗi xảy ra khi tạo bưu thiếp: " + error.message);
+    });
+}
+
+// Function to create an image with text on canvas
+function createImageWithText(imageSrc, text) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous"; // Handle CORS if needed
+
+    img.onload = () => {
+      // Create canvas
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Set canvas dimensions to match the image
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Draw the background image
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      // Configure text styling
+      ctx.fillStyle = "#981"; // White text
+      // ctx.strokeStyle = "#000000"; // Black outline
+      ctx.lineWidth = 1;
+
+      // Font size based on image dimensions (adjust as needed)
+      const fontSize = Math.max(24, Math.floor(canvas.width / 40));
+      ctx.font = `bold ${fontSize}px Lobster`;
+      ctx.textAlign = "center";
+
+      // Position the text (adjust as needed)
+      const textX = 420;
+      const textY = 260; // 70% down from the top
+
+      // Draw text with outline for better visibility
+      ctx.strokeText(text, textX, textY);
+      ctx.fillText(text, textX, textY);
+
+      // Convert to data URL
+      const dataUrl = canvas.toDataURL("image/png");
+      resolve(dataUrl);
+    };
+
+    img.onerror = (error) => {
+      reject(new Error("Failed to load image"));
+    };
+
+    img.src = imageSrc;
+  });
 }
 
 function downloadPostcard() {
-  const element = document.querySelector("#postcard");
+  if (!processedImageDataUrl) {
+    alert("Vui lòng tạo bưu thiếp trước khi tải xuống.");
+    return;
+  }
+
   const downloadBtn = document.getElementById("download-btn");
   const originalText = downloadBtn.innerHTML;
   downloadBtn.innerHTML = "Đang xử lý...";
   downloadBtn.disabled = true;
 
-  element.style.display = "block";
-  element.style.visibility = "visible";
+  try {
+    // Create download link for the processed image
+    const link = document.createElement("a");
+    link.href = processedImageDataUrl;
+    link.download = "postcard.png";
+    document.body.appendChild(link);
+    link.click();
 
-  html2canvas(element, {
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: null,
-    scale: 2,
-  })
-    .then((canvas) => {
-      console.log(canvas);
-      const imgData = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = imgData;
-      link.download = "postcard.png";
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(() => {
-        document.body.removeChild(link);
-        downloadBtn.innerHTML = originalText;
-        downloadBtn.disabled = false;
-      }, 100);
-    })
-    .catch(function (error) {
-      console.error("Lỗi khi tạo postcard:", error);
-      alert("Có lỗi xảy ra khi tải xuống bưu thiếp: " + error.message);
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(link);
       downloadBtn.innerHTML = originalText;
       downloadBtn.disabled = false;
-    });
+    }, 100);
+  } catch (error) {
+    console.error("Lỗi khi tải xuống bưu thiếp:", error);
+    alert("Có lỗi xảy ra khi tải xuống bưu thiếp: " + error.message);
+    downloadBtn.innerHTML = originalText;
+    downloadBtn.disabled = false;
+  }
 }
